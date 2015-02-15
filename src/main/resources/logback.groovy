@@ -31,4 +31,4 @@ appender("FILE", RollingFileAppender) {
   }
 }
 
-root(ALL, ["CONSOLE", "FILE"])
+root(ERROR, ["CONSOLE", "FILE"])

@@ -4,6 +4,7 @@ public/
 bower_components/
 css/
 target/
+node/
 
 
 *.log
