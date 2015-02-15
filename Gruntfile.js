@@ -4,7 +4,7 @@ module.exports = function (grunt) {
 
     clean: {
       build: ["<%=pkg.public%>", "<%=pkg.assets%>css", "<%=pkg.assets%>bower_components", "<%=pkg.assets%>index.html"],
-      mvn: ["<%=pkg.assets%>", "<%=pkg.public%>sass"]
+      mvn: ["<%=pkg.public%>"]
     },
 
     copy: {
@@ -149,7 +149,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-sass");
 
   grunt.registerTask("mvn", [
-    "clean:build",
+    "clean:mvn",
     "copy:build",
     "bower-install-simple:build",
     "includeSource:target",
