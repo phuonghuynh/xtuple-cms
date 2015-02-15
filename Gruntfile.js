@@ -147,6 +147,15 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-ng-annotate");
   grunt.loadNpmTasks("grunt-sass");
 
+  grunt.registerTask("mvn", [
+    "clean:build",
+    "copy:build",
+    "bower-install-simple:build",
+    "includeSource:target",
+    "wiredep:target",
+    "ngAnnotate:main"
+  ]);
+
   grunt.registerTask("build", [
     "clean:build",
     "copy:build",

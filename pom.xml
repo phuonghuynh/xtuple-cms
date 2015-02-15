@@ -290,7 +290,75 @@
           <excludes>**/*.sass</excludes>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <version>0.0.19</version>
+        <executions>
+          <execution>
+            <id>install node and npm</id>
+            <goals>
+              <goal>install-node-and-npm</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <nodeVersion>v0.10.31</nodeVersion>
+              <npmVersion>1.4.26</npmVersion>
+            </configuration>
+          </execution>
+          <execution>
+            <id>npm install</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <phase>generate-resources</phase>
+          </execution>
+          <execution>
+            <id>grunt build</id>
+            <goals>
+              <goal>grunt</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <arguments>mvn</arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.jasig.maven</groupId>
+        <artifactId>sass-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>Generate CSS files</id>
+            <goals>
+              <goal>update-stylesheets</goal>
+            </goals>
+            <phase>generate-sources</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <resources>
+            <resource>
+              <source>
+                <directory>${project.basedir}/src/main/webapp/public/sass</directory>
+              </source>
+              <destination>${project.basedir}/src/main/webapp/public/css</destination>
+            </resource>
+          </resources>
+        </configuration>
+      </plugin>
     </plugins>
+    <!--<pluginManagement>-->
+      <!--<plugins>-->
+        <!--<plugin>-->
+          <!--<groupId>org.jasig.maven</groupId>-->
+          <!--<artifactId>sass-maven-plugin</artifactId>-->
+        <!--</plugin>-->
+      <!--</plugins>-->
+    <!--</pluginManagement>-->
   </build>
 
   <repositories>
