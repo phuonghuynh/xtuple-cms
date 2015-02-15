@@ -343,9 +343,9 @@
           <resources>
             <resource>
               <source>
-                <directory>${project.basedir}/src/main/webapp/public/sass</directory>
+                <directory>${project.basedir}/src/main/webapp/assets/sass</directory>
               </source>
-              <destination>${project.basedir}/src/main/webapp/public/css</destination>
+              <destination>${project.basedir}/src/main/webapp/assets/css</destination>
             </resource>
           </resources>
         </configuration>

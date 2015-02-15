@@ -3,7 +3,8 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON("package.json"),
 
     clean: {
-      build: ["<%=pkg.public%>", "<%=pkg.assets%>css", "<%=pkg.assets%>bower_components", "<%=pkg.assets%>index.html"]
+      build: ["<%=pkg.public%>", "<%=pkg.assets%>css", "<%=pkg.assets%>bower_components", "<%=pkg.assets%>index.html"],
+      mvn: ["<%=pkg.assets%>", "<%=pkg.public%>sass"]
     },
 
     copy: {
@@ -153,7 +154,8 @@ module.exports = function (grunt) {
     "bower-install-simple:build",
     "includeSource:target",
     "wiredep:target",
-    "ngAnnotate:main"
+    "ngAnnotate:main",
+    "clean:mvn"
   ]);
 
   grunt.registerTask("build", [
