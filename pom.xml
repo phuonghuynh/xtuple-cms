@@ -343,7 +343,7 @@
           <resources>
             <resource>
               <source>
-                <directory>${project.basedir}/src/main/webapp/assets/sass</directory>
+                <directory>${project.basedir}/src/main/webapp/assets/scss</directory>
               </source>
               <destination>${project.basedir}/src/main/webapp/assets/css</destination>
             </resource>
