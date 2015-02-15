@@ -39,15 +39,17 @@ public class CompanyController {
   @MessageMapping("/user/company/register")
   public void register(CompanyInfo companyInfo) {
     String destination = "/topic/" + companyInfo.getAdmin() + "/company/register";
+    String command = String.format(installCmd, companyInfo.getAdmin(), companyInfo.getPassword(), companyInfo.getDomainName());
     try {
-      String[] cmd = {"/bin/bash", "-c", "echo '" + sudoPwd + "'| sudo -S ls"};
+      String[] cmd = {"/bin/bash", "-c", "echo '" + sudoPwd + "'| sudo -S " + command};
       Process process = Runtime.getRuntime().exec(cmd);
       BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
       for (String line = input.readLine(); line != null; line = input.readLine()) {
 //        ssh user@host <<'ENDSSH'
 //        #commands to run on remote host
 //        ENDSSH
-        messagingTemplate.convertAndSend(destination, "467 info sys-report \u001B[32mxTuple Instance: \u001B[39m");
+        messagingTemplate.convertAndSend(destination, line);
+//        messagingTemplate.convertAndSend(destination, "467 info sys-report \u001B[32mxTuple Instance: \u001B[39m");
 //        Thread.sleep(5000);
       }
       input.close();
