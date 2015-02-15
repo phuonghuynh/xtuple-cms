@@ -154,8 +154,7 @@ module.exports = function (grunt) {
     "bower-install-simple:build",
     "includeSource:target",
     "wiredep:target",
-    "ngAnnotate:main",
-    "clean:mvn"
+    "ngAnnotate:main"
   ]);
 
   grunt.registerTask("build", [
