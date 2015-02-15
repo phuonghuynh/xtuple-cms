@@ -1,0 +1,10 @@
+node_modules/
+.idea/
+public/
+bower_components/
+css/
+target/
+
+
+*.log
+*.tml

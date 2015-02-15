@@ -1,0 +1,24 @@
+{
+  "name": "xtuple-cms",
+  "description": "This is a simple Xtuple CMS",
+  "devDependencies": {
+    "grunt": "latest",
+    "grunt-cli": "latest",
+    "grunt-contrib-connect": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-include-source": "latest",
+    "grunt-wiredep": "latest",
+    "grunt-usemin": "latest",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-cssmin": "latest",
+    "grunt-contrib-copy": "latest",
+    "grunt-contrib-clean": "latest",
+    "grunt-bower-install-simple": "latest",
+    "grunt-ng-annotate": "latest",
+    "grunt-text-replace": "latest",
+    "grunt-sass": "latest"
+  },
+  "assets": "src/main/webapp/assets/",
+  "public": "src/main/webapp/public/"
+}
