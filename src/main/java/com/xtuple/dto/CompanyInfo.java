@@ -4,33 +4,65 @@ package com.xtuple.dto;
  * Created by phuonghqh on 2/15/15.
  */
 public class CompanyInfo {
-  private String admin;
+  private String installName;
 
-  private String password;
+  private String adminPassword;
 
-  private String domainName;
+  private String publicDomain;
 
-  public String getAdmin() {
-    return admin;
+
+  public String getInstallName() {
+    return installName;
   }
 
-  public void setAdmin(String admin) {
-    this.admin = admin;
+  public void setInstallName(String installName) {
+    this.installName = installName;
   }
 
-  public String getPassword() {
-    return password;
+  public String getAdminPassword() {
+    return adminPassword;
   }
 
-  public void setPassword(String password) {
-    this.password = password;
+  public void setAdminPassword(String adminPassword) {
+    this.adminPassword = adminPassword;
   }
 
-  public String getDomainName() {
-    return domainName;
+  public String getPublicDomain() {
+    return publicDomain;
   }
 
-  public void setDomainName(String domainName) {
-    this.domainName = domainName;
+  public void setPublicDomain(String publicDomain) {
+    this.publicDomain = publicDomain;
+  }
+
+  public static class CompanyInfoBuilder {
+    private CompanyInfo companyInfo;
+
+    private CompanyInfoBuilder() {
+      companyInfo = new CompanyInfo();
+    }
+
+    public CompanyInfoBuilder withInstallName(String installName) {
+      companyInfo.installName = installName;
+      return this;
+    }
+
+    public CompanyInfoBuilder withAdminPassword(String adminPassword) {
+      companyInfo.adminPassword = adminPassword;
+      return this;
+    }
+
+    public CompanyInfoBuilder withPublicDomain(String publicDomain) {
+      companyInfo.publicDomain = publicDomain;
+      return this;
+    }
+
+    public static CompanyInfoBuilder companyInfo() {
+      return new CompanyInfoBuilder();
+    }
+
+    public CompanyInfo build() {
+      return companyInfo;
+    }
   }
 }

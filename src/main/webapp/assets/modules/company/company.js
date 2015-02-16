@@ -1,16 +1,16 @@
-xtuple.controller("companyListController", function($scope, entranceService, connectionFactory) {
-
+xtuple.controller("companyKonsoleController", function($scope, $location) {
+  //$scope.close = function() {
+  //  $location.path("/company/list");
+  //}
 });
 
-xtuple.controller("companyRegistrationController", function($scope, entranceService, connectionFactory) {
+xtuple.controller("companyRegistrationController", function($scope, connectionFactory, $location) {
+  console.log("konsole");
   $scope.register = function() {
     connectionFactory.registerCompany($scope.companyInfo);
+    $location.path("/company/registration-konsole");
   };
-
-  //$scope.companyInfo = undefined;
 });
+xtuple.controller("companyListController", function($scope, connectionFactory, $location) {
 
-xtuple.factory("companyService", function($http) {
-  return {
-  }
 });

@@ -13,7 +13,8 @@
     "cafej": "latest",
     "bootswatch": "latest",
     "ansi_up": "latest",
-    "angu-fixed-header-table": "latest"
+    "angu-fixed-header-table": "latest",
+    "alertify.js": "latest"
   },
   "overrides": {
     "jquery": {
@@ -27,18 +28,6 @@
     },
     "stomp-websocket": {
       "main": "lib/stomp.min.js"
-    },
-    "angular": {
-      "main": "angular.min.js"
-    },
-    "angular-resource": {
-      "main": "angular-resource.min.js"
-    },
-    "angular-route": {
-      "main": "angular-route.min.js"
-    },
-    "angular-cookies": {
-      "main": "angular-cookies.min.js"
     }
   },
   "resolutions": {

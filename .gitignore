@@ -6,6 +6,7 @@ css/
 target/
 node/
 
-
 *.log
-*.tml
+*.iml
+
+override.properties

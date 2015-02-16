@@ -1,17 +1,29 @@
 package com.xtuple.controller;
 
 import com.xtuple.dto.CompanyInfo;
+import com.xtuple.dto.Result;
+import com.xtuple.entity.Company;
+import com.xtuple.entity.User;
 import com.xtuple.service.CompanyService;
+import com.xtuple.task.InputStreamTask;
+import com.xtuple.task.RunningTask;
+import org.javalite.activejdbc.Base;
+import org.javalite.activejdbc.LazyList;
+import org.javalite.activejdbc.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import javax.servlet.http.Cookie;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by phuonghqh on 2/15/15.
@@ -27,33 +39,64 @@ public class CompanyController {
   @Value("${sudo.pwd}")
   private String sudoPwd;
 
+  @Value("${db.host}")
+  private String dbHost;
+
+  @Value("${db.username}")
+  private String dbUsername;
+
+  @Value("${db.password}")
+  private String dbPassword;
 
   @Value("${xtuple.cmd.install}")
-  private String installCmd;// = "sudo xtuple-server install-pilot --xt-version 4.7.0 --pg-capacity 64 --xt-quickstart --xt-name %s --xt-adminpw %s";
+  private String installCmd;
 
   @Resource
   private CompanyService companyService;
 
-  //  @SendToUser("/queue/info")
-//  @MessageMapping("/user/findByKey")
+  @ResponseBody
+  @RequestMapping(value = "/company", method = RequestMethod.GET)
+  public List<CompanyInfo> all() {
+    List<CompanyInfo> companyInfos = new ArrayList<>();
+    Base.open("org.postgresql.Driver", dbHost, dbUsername, dbPassword);
+    List<Company> companies = Company.findAll();
+    for (Company company : companies) {
+      CompanyInfo companyInfo = CompanyInfo.CompanyInfoBuilder.companyInfo()
+        .withInstallName(company.get("_installName").toString())
+        .withPublicDomain(company.get("_publicDomain").toString())
+        .withAdminPassword(company.get("_adminPassword").toString()).build();
+      companyInfos.add(companyInfo);
+    }
+    Base.close();
+    return companyInfos;
+  }
+
+
   @MessageMapping("/user/company/register")
   public void register(CompanyInfo companyInfo) {
-    String destination = "/topic/" + companyInfo.getAdmin() + "/company/register";
-    String command = String.format(installCmd, companyInfo.getAdmin(), companyInfo.getPassword());
+    final String destination = "/topic/" + companyInfo.getInstallName() + "/company/register";
+    String command = String.format(installCmd, companyInfo.getInstallName(), companyInfo.getAdminPassword());
     try {
-      String[] cmd = {"/bin/bash", "-c", "echo '" + sudoPwd + "' | sudo -S " + command};
-      Process process = Runtime.getRuntime().exec(cmd);
-      BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
-      for (String line = input.readLine(); line != null; line = input.readLine()) {
-//        ssh user@host <<'ENDSSH'
-//        #commands to run on remote host
-//        ENDSSH
-        LOGGER.debug(line);
-        messagingTemplate.convertAndSend(destination, line);
-//        messagingTemplate.convertAndSend(destination, "467 info sys-report \u001B[32mxTuple Instance: \u001B[39m");
-//        Thread.sleep(5000);
+      String[] cmd = {"sh", "-c", "echo '" + sudoPwd + "'| sudo -S " + command};
+      final Process process = Runtime.getRuntime().exec(cmd);
+      Thread[] threads = new Thread[] {
+        new InputStreamTask(process.getInputStream(), LOGGER, messagingTemplate, destination),
+        new InputStreamTask(process.getErrorStream(), LOGGER, messagingTemplate, destination)
+      };
+
+      for (Thread t : threads) {
+        t.start();
       }
-      input.close();
+
+      RunningTask warmTask = new RunningTask(">>System running tasks in the background...", LOGGER, messagingTemplate, destination);
+      warmTask.start();
+
+      for (Thread t : threads) {
+        t.join();
+      }
+
+      LOGGER.debug("All threads stopped");
+      warmTask.setStop(true);
       companyService.register(companyInfo);
       messagingTemplate.convertAndSend(destination, "ENDED!!!!");
     }

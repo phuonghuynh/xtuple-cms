@@ -29,7 +29,7 @@
   <!-- include a theme, can be included into the core instead of 2 separate files -->
   <!--<link rel="stylesheet" href="PATH_TO_FILE/alertify.default.css" />-->
 
-  <!-- include: "type": "css", "files": "css/**/*.css" -->
+  <link href="css/main.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -51,7 +51,7 @@
       </ul>
     </nav>
     <div class="col-md-offset-1 col-md-3">
-      <ul ng-show="{{userInfo !== undefined}}" class="nav nav-pills nav-stacked leftMenu">
+      <ul ng-show="userInfo !== undefined" class="nav nav-pills nav-stacked leftMenu">
         <li class="active"><a href="#/company/list">Home</a></li>
         <li><a href="#/company/registration">Company registration</a></li>
         <li><a href="#/company/registration-konsole">Console log</a></li>
@@ -68,9 +68,26 @@
 </body>
 
 <!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.min.js" charset="utf-8"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js" charset="utf-8"></script>
+<script src="bower_components/sockjs/sockjs.min.js" charset="utf-8"></script>
+<script src="bower_components/stomp-websocket/lib/stomp.min.js" charset="utf-8"></script>
+<script src="bower_components/angular/angular.js" charset="utf-8"></script>
+<script src="bower_components/angular-resource/angular-resource.js" charset="utf-8"></script>
+<script src="bower_components/angular-route/angular-route.js" charset="utf-8"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js" charset="utf-8"></script>
+<script src="bower_components/cafej/src/extarray.js" charset="utf-8"></script>
+<script src="bower_components/cafej/src/micro-observer.js" charset="utf-8"></script>
+<script src="bower_components/cafej/src/misc.js" charset="utf-8"></script>
+<script src="bower_components/ansi_up/ansi_up.js" charset="utf-8"></script>
+<script src="bower_components/angu-fixed-header-table/angu-fixed-header-table.js" charset="utf-8"></script>
+<script src="bower_components/alertify.js/lib/alertify.js" charset="utf-8"></script>
 <!-- endbower -->
 
-<!-- include: "type": "js", "files": "modules/**/*.js" -->
+<script src="modules/app.js"></script>
+<script src="modules/common/connection.fac.js"></script>
+<script src="modules/company/company.js"></script>
+<script src="modules/entrance/entrance.js"></script>
 
 
 </html>

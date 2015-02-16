@@ -1,44 +1,47 @@
-<div class="row">
-  <div class="col-md-offset-3 col-md-7">
-    <div class="form-login">
-      <h4>Company Registration</h4>
-      <div class="input-group">
-        <span class="input-group-addon" id="name">@</span>
-        <input ng-model="companyInfo.name" type="text" class="form-control" placeholder="Company name" aria-describedby="name">
-      </div>
+<div class="form-login">
+  <h4>Company Registration</h4>
 
-      <div class="input-group">
-        <span class="input-group-addon" id="adminName" data-toggle="tooltip" data-placement="top" title="Name of the installation">
+  <div class="input-group">
+    <span class="input-group-addon" id="name">@</span>
+    <input ng-model="companyInfo.name" type="text" class="form-control" placeholder="Company name"
+           aria-describedby="name">
+  </div>
+
+  <div class="input-group">
+        <span class="input-group-addon" id="installName" data-toggle="tooltip" data-placement="top"
+              title="Name of the installation">
           <i class="fa fa-info-circle"></i>
         </span>
-        <input ng-model="companyInfo.admin" type="text" class="form-control" placeholder="Admin username" aria-describedby="adminName">
-      </div>
+    <input ng-model="companyInfo.installName" type="text" class="form-control" placeholder="Name of the installation"
+           aria-describedby="installName">
+  </div>
 
-      <div class="input-group">
-        <span class="input-group-addon" id="adminPassword" data-toggle="tooltip" data-placement="top" title="Password for the database 'admin' user for a new database">
+  <div class="input-group">
+        <span class="input-group-addon" id="adminPassword" data-toggle="tooltip" data-placement="top"
+              title="Password for the database 'admin' user for a new database">
           <i class="fa fa-info-circle"></i>
         </span>
-        <input ng-model="companyInfo.password" type="password" class="form-control" placeholder="Password" aria-describedby="adminPassword">
-      </div>
+    <input ng-model="companyInfo.adminPassword" type="password" class="form-control"
+           placeholder="Password of 'admin' user" aria-describedby="adminPassword">
+  </div>
 
-      <div class="input-group">
-        <span class="input-group-addon" id="adminConfirmPassword">@</span>
-        <input type="password" class="form-control" placeholder="Confirm password" aria-describedby="adminConfirmPassword">
-      </div>
+  <div class="input-group">
+    <span class="input-group-addon" id="adminConfirmPassword">@</span>
+    <input type="password" class="form-control" placeholder="Confirm password"
+           aria-describedby="adminConfirmPassword">
+  </div>
 
-      <div class="input-group">
-        <span class="input-group-addon" id="domainName" data-toggle="tooltip" data-placement="top" title="The public domain name that will point to this web server">
-          <i class="fa fa-info-circle"></i>
-        </span>
-        <input ng-model="companyInfo.domainName"  type="text" class="form-control" placeholder="Domain name" aria-describedby="domainName">
-      </div>
-      </br>
-      <div class="wrapper">
-        <span class="group-btn">
-          <a class="btn btn-danger btn-md" ng-click="register()">Register <i class="fa fa-user-plus"></i></a>
-        </span>
-      </div>
-    </div>
-    <pre class="console"></pre>
+  <!--<div class="input-group">-->
+  <!--<span class="input-group-addon" id="publicDomain" data-toggle="tooltip" data-placement="top" title="The public domain name that will point to this web server">-->
+  <!--<i class="fa fa-info-circle"></i>-->
+  <!--</span>-->
+  <!--<input ng-model="companyInfo.publicDomain"  type="text" class="form-control" placeholder="The public domain name that will point to this web server" aria-describedby="publicDomain">-->
+  <!--</div>-->
+  </br>
+  <div class="wrapper">
+      <span class="group-btn">
+        <button class="btn btn-danger btn-md btnCompanyRegister" ng-click="register()">Register <i
+          class="fa fa-user-plus"></i></button>
+      </span>
   </div>
 </div>

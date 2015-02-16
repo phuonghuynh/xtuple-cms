@@ -1,6 +1,8 @@
 package com.xtuple.config;
 
 
+import org.jasypt.util.text.BasicTextEncryptor;
+import org.jasypt.util.text.TextEncryptor;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
@@ -21,5 +23,18 @@ public class CoreConfiguration {
   @Bean
   public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
     return new PropertySourcesPlaceholderConfigurer();
+  }
+
+  @Bean
+  public TextEncryptor textEncryptor() {
+    BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+    textEncryptor.setPassword(environment.getProperty("core.textEncryptor.password"));
+    return textEncryptor;
+  }
+
+  public static void main(String[] args) {
+    BasicTextEncryptor abc = new BasicTextEncryptor();
+    abc.setPassword("XR3hBZnJ6gLH");
+    System.out.println(abc.encrypt("password"));
   }
 }

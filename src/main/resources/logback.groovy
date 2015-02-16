@@ -31,4 +31,6 @@ appender("FILE", RollingFileAppender) {
   }
 }
 
+logger("com.xtuple", ALL, ["CONSOLE", "FILE"], Boolean.FALSE)
+
 root(ERROR, ["CONSOLE", "FILE"])
