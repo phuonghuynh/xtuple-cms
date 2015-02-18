@@ -21,7 +21,7 @@ xtuple.controller("entranceSignInController", function ($scope, $location, $root
 xtuple.controller("entranceSettingController", function ($scope, $location, $rootScope, $http) {
   $scope.update = function () {
     if ($scope.userSetting.password !== $(".confirmPassword").val()) {
-      console.log("New password & Confirm password not match.");
+      alertify.error("New password & Confirm password not match.");
       return;
     }
     $scope.userSetting.username = $rootScope.userInfo.username;

@@ -23,11 +23,11 @@ public class CompanyServiceImpl implements CompanyService {
   private String dbPassword;
 
   public void register(CompanyInfo companyInfo) {
-//    Base.open("org.postgresql.Driver", dbHost, dbUsername, dbPassword);
-//    Company company = new Company();
-//    company.set(new String[]{"_admin", "_password", "_domainName"},
-//      new String[]{companyInfo.getAdmin(), companyInfo.getPassword(), companyInfo.getDomainName()});
-//    company.saveIt();
-//    Base.close();
+    Base.open("org.postgresql.Driver", dbHost, dbUsername, dbPassword);
+    Company company = new Company();
+    company.set(new String[]{"_installName", "_adminPassword", "_publicDomain", "_sysReport"},
+      new String[]{companyInfo.getInstallName(), companyInfo.getAdminPassword(), companyInfo.getPublicDomain(), companyInfo.getSysReport()});
+    company.saveIt();
+    Base.close();
   }
 }

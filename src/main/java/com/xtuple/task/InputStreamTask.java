@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
  */
 public class InputStreamTask extends Thread {
 
+  private StringBuilder sysReportBuilder;
+
   private BufferedReader inputStream;
 
   private Logger logger;
@@ -20,17 +22,22 @@ public class InputStreamTask extends Thread {
 
   private String destination;
 
-  public InputStreamTask(InputStream inputStream, Logger logger, SimpMessagingTemplate messagingTemplate, String destination) {
+  public InputStreamTask(InputStream inputStream, Logger logger,
+                         SimpMessagingTemplate messagingTemplate, String destination, StringBuilder sysReportBuilder) {
     this.inputStream = new BufferedReader(new InputStreamReader(inputStream));
     this.logger = logger;
     this.messagingTemplate = messagingTemplate;
     this.destination = destination;
+    this.sysReportBuilder = sysReportBuilder;
   }
 
   public void run() {
     try {
       String line;
       while ((line = inputStream.readLine()) != null) {
+        if (line.contains("sys-report")) {
+          sysReportBuilder.append(line);
+        }
         logger.debug(line);
         messagingTemplate.convertAndSend(destination, line);
       }

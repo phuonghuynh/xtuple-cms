@@ -1,15 +1,11 @@
 package com.xtuple.controller;
 
 import com.xtuple.dto.CompanyInfo;
-import com.xtuple.dto.Result;
 import com.xtuple.entity.Company;
-import com.xtuple.entity.User;
 import com.xtuple.service.CompanyService;
 import com.xtuple.task.InputStreamTask;
 import com.xtuple.task.RunningTask;
 import org.javalite.activejdbc.Base;
-import org.javalite.activejdbc.LazyList;
-import org.javalite.activejdbc.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +59,7 @@ public class CompanyController {
       CompanyInfo companyInfo = CompanyInfo.CompanyInfoBuilder.companyInfo()
         .withInstallName(company.get("_installName").toString())
         .withPublicDomain(company.get("_publicDomain").toString())
+        .withSysReport(company.get("_sysReport").toString())
         .withAdminPassword(company.get("_adminPassword").toString()).build();
       companyInfos.add(companyInfo);
     }
@@ -75,13 +71,14 @@ public class CompanyController {
   @MessageMapping("/user/company/register")
   public void register(CompanyInfo companyInfo) {
     final String destination = "/topic/" + companyInfo.getInstallName() + "/company/register";
-    String command = String.format(installCmd, companyInfo.getInstallName(), companyInfo.getAdminPassword());
+    String command = String.format(installCmd, companyInfo.getInstallName(), companyInfo.getAdminPassword(), companyInfo.getPublicDomain());
     try {
       String[] cmd = {"sh", "-c", "echo '" + sudoPwd + "'| sudo -S " + command};
       final Process process = Runtime.getRuntime().exec(cmd);
-      Thread[] threads = new Thread[] {
-        new InputStreamTask(process.getInputStream(), LOGGER, messagingTemplate, destination),
-        new InputStreamTask(process.getErrorStream(), LOGGER, messagingTemplate, destination)
+      StringBuilder sysReportBuilder = new StringBuilder();
+      Thread[] threads = new Thread[]{
+        new InputStreamTask(process.getInputStream(), LOGGER, messagingTemplate, destination, sysReportBuilder),
+        new InputStreamTask(process.getErrorStream(), LOGGER, messagingTemplate, destination, sysReportBuilder)
       };
 
       for (Thread t : threads) {
@@ -97,6 +94,7 @@ public class CompanyController {
 
       LOGGER.debug("All threads stopped");
       warmTask.setStop(true);
+      companyInfo.setSysReport(sysReportBuilder.toString());
       companyService.register(companyInfo);
       messagingTemplate.convertAndSend(destination, "ENDED!!!!");
     }

@@ -4,30 +4,15 @@
     <thead>
     <tr>
       <th>Install Name</th>
-      <th>Admin account password</th>
       <th>Public domain</th>
+      <th>Sys Report</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody ng-repeat="company in companies">
     <tr>
-      <td>Product1</td>
-      <td>23/11/2013</td>
-      <td>Pending</td>
-    </tr>
-    <tr>
-      <td>Product2</td>
-      <td>10/11/2013</td>
-      <td>Delivered</td>
-    </tr>
-    <tr>
-      <td>Product3</td>
-      <td>20/10/2013</td>
-      <td>In Call to confirm</td>
-    </tr>
-    <tr>
-      <td>Product4</td>
-      <td>20/10/2013</td>
-      <td>Declined</td>
+      <td>{{company.installName}}</td>
+      <td>{{company.publicDomain}}</td>
+      <td><div ng-bind-html-unsafe="company.sysReport"></div></td>
     </tr>
     </tbody>
   </table>

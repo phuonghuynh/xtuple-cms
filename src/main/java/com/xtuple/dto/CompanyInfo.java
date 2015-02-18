@@ -10,6 +10,15 @@ public class CompanyInfo {
 
   private String publicDomain;
 
+  private String sysReport;
+
+  public String getSysReport() {
+    return sysReport;
+  }
+
+  public void setSysReport(String sysReport) {
+    this.sysReport = sysReport;
+  }
 
   public String getInstallName() {
     return installName;
@@ -35,34 +44,47 @@ public class CompanyInfo {
     this.publicDomain = publicDomain;
   }
 
-  public static class CompanyInfoBuilder {
-    private CompanyInfo companyInfo;
+  public static class CompanyInfoBuilder
+    {
+        private CompanyInfo companyInfo;
 
-    private CompanyInfoBuilder() {
-      companyInfo = new CompanyInfo();
-    }
+        private CompanyInfoBuilder()
+        {
+            companyInfo = new CompanyInfo();
+        }
 
-    public CompanyInfoBuilder withInstallName(String installName) {
-      companyInfo.installName = installName;
-      return this;
-    }
+        public CompanyInfoBuilder withInstallName(String installName)
+        {
+            companyInfo.installName = installName;
+            return this;
+        }
 
-    public CompanyInfoBuilder withAdminPassword(String adminPassword) {
-      companyInfo.adminPassword = adminPassword;
-      return this;
-    }
+        public CompanyInfoBuilder withAdminPassword(String adminPassword)
+        {
+            companyInfo.adminPassword = adminPassword;
+            return this;
+        }
 
-    public CompanyInfoBuilder withPublicDomain(String publicDomain) {
-      companyInfo.publicDomain = publicDomain;
-      return this;
-    }
+        public CompanyInfoBuilder withPublicDomain(String publicDomain)
+        {
+            companyInfo.publicDomain = publicDomain;
+            return this;
+        }
 
-    public static CompanyInfoBuilder companyInfo() {
-      return new CompanyInfoBuilder();
-    }
+        public CompanyInfoBuilder withSysReport(String sysReport)
+        {
+            companyInfo.sysReport = sysReport;
+            return this;
+        }
 
-    public CompanyInfo build() {
-      return companyInfo;
+        public static CompanyInfoBuilder companyInfo()
+        {
+            return new CompanyInfoBuilder();
+        }
+
+        public CompanyInfo build()
+        {
+            return companyInfo;
+        }
     }
-  }
 }
